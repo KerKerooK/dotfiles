@@ -1,0 +1,35 @@
+#! /bin/sh
+
+############ Autostart ############
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+feh --bg-fill --randomize $HOME/wallpapers/background/* &
+$HOME/.config/polybar/launch.sh &
+xrdb merge ~/.Xresources &
+
+declare -a restart=(picom )
+for i in "${restart[@]}"; do
+	pgrep -x "$i" | xargs kill
+	sleep 0.5
+	eval "$i" &
+done
+
+############ Workspaces #############
+
+bspc monitor -d 1 2 3 4 5 6 7 8 9
+
+############ Window Settings ###########
+
+bspc config border_width         3
+bspc config window_gap           9
+bspc config split_ratio          0.538
+bspc config top_padding          34
+
+bspc config normal_border_color "#32344a"
+bspc config focused_border_color "#8ab9f1"
+
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+bspc config single_monocle false
+bspc config focus_follows_pointer true
+
