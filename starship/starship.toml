@@ -1,0 +1,2 @@
+format = "$directory$git_branch$language$character"
+add_newline = false
